@@ -37,8 +37,8 @@ export type TNavLink = {
 export type TService = Required<Omit<TCommonProps, "name">>;
 
 export type TMotion = {
-  direction: "up" | "down" | "left" | "right" | "";
-  type: "tween" | "spring" | "just" | "";
+  direction: "left" | "right" | "up" | "down" | "";
+  type: "spring" | "tween" | string;
   delay: number;
   duration: number;
 };

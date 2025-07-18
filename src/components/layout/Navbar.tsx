@@ -1,120 +1,77 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
+import clsx from 'clsx';
 
-import { styles } from "../../constants/styles";
-import { navLinks } from "../../constants";
-import { logo, menu, close } from "../../assets";
-import { config } from "../../constants/config";
+type NavItem = {
+  name: string;
+  link: string;
+};
+
+const navLinks: NavItem[] = [
+  { name: 'About', link: '/' },
+  { name: 'Experience', link: '#experience' },
+  { name: 'Prjects', link: '#prjects' },
+  { name: 'Contact', link: '#contact' },
+];
 
 const Navbar = () => {
-  const [active, setActive] = useState<string | null>();
-  const [toggle, setToggle] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const { scrollYProgress } = useScroll();
+  const [visible, setVisible] = useState(true);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      if (scrollTop > 100) {
-        setScrolled(true);
+  useMotionValueEvent(scrollYProgress, 'change', current => {
+    if (typeof current === 'number') {
+      const direction = current - scrollYProgress.getPrevious()!;
+      if (scrollYProgress.get() < 0.05) {
+        setVisible(true);
       } else {
-        setScrolled(false);
-        setActive("");
+        setVisible(direction < 0);
       }
-    };
+    }
+  });
 
-    window.addEventListener("scroll", handleScroll);
-
-    const navbarHighlighter = () => {
-      const sections = document.querySelectorAll("section[id]");
-
-      sections.forEach((current) => {
-        const sectionId = current.getAttribute("id");
-        // @ts-ignore
-        const sectionHeight = current.offsetHeight;
-        const sectionTop =
-          current.getBoundingClientRect().top - sectionHeight * 0.2;
-
-        if (sectionTop < 0 && sectionTop + sectionHeight > 0) {
-          setActive(sectionId);
-        }
-      });
-    };
-
-    window.addEventListener("scroll", navbarHighlighter);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("scroll", navbarHighlighter);
-    };
-  }, []);
+  const handleScrollToSection = (link: string) => {
+    if (link.startsWith('#')) {
+      const targetId = link.substring(1);
+      const section = document.getElementById(targetId);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      // لو الرابط صفحة خارجية أو الراوت الأساسي، نفذ التنقل بالروتر أو افتح الرابط
+      window.location.href = link;
+    }
+  };
 
   return (
-    <nav
-      className={`${
-        styles.paddingX
-      } fixed top-0 z-20 flex w-full items-center py-5 ${
-        scrolled ? "bg-primary" : "bg-transparent"
-      }`}
-    >
-      <div className="mx-auto flex w-full max-w-7xl items-center justify-between">
-        <Link
-          to="/"
-          className="flex items-center gap-2"
-          onClick={() => {
-            window.scrollTo(0, 0);
-          }}
-        >
-          <img src={logo} alt="logo" className="h-9 w-9 object-contain" />
-          <p className="flex cursor-pointer text-[18px] font-bold text-white ">
-            {config.html.title}
-          </p>
-        </Link>
-
-        <ul className="hidden list-none flex-row gap-10 sm:flex">
-          {navLinks.map((nav) => (
-            <li
-              key={nav.id}
-              className={`${
-                active === nav.id ? "text-white" : "text-secondary"
-              } cursor-pointer text-[18px] font-medium hover:text-white`}
-            >
-              <a href={`#${nav.id}`}>{nav.title}</a>
-            </li>
-          ))}
-        </ul>
-
-        <div className="flex flex-1 items-center justify-end sm:hidden">
-          <img
-            src={toggle ? close : menu}
-            alt="menu"
-            className="h-[28px] w-[28px] object-contain"
-            onClick={() => setToggle(!toggle)}
-          />
-
-          <div
-            className={`${
-              !toggle ? "hidden" : "flex"
-            } black-gradient absolute right-0 top-20 z-10 mx-4 my-2 min-w-[140px] rounded-xl p-6`}
+    <AnimatePresence mode="wait">
+      <motion.div
+        initial={{ opacity: 1, y: -100 }}
+        animate={{
+          y: visible ? 0 : -100,
+          opacity: visible ? 1 : 0,
+        }}
+        transition={{ duration: 0.2 }}
+        className={clsx(
+          'flex max-w-fit md:min-w-[70vw] lg:min-w-fit fixed z-[5000] top-10 inset-x-0 mx-auto px-10 py-5 rounded-lg border border-black/[.1] shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] items-center justify-center space-x-4'
+        )}
+        style={{
+          backdropFilter: 'blur(16px) saturate(180%)',
+          backgroundColor: 'rgba(17, 25, 40, 0.75)',
+          borderRadius: '12px',
+          border: '1px solid rgba(255, 255, 255, 0.125)',
+        }}
+      >
+        {navLinks.map((navItem: NavItem, idx: number) => (
+          <span
+            key={`link-${idx}`}
+            onClick={() => handleScrollToSection(navItem.link)}
+            className="relative dark:text-neutral-50 items-center flex space-x-1 text-neutral-600 dark:hover:text-neutral-300 hover:text-neutral-500 cursor-pointer"
           >
-            <ul className="flex flex-1 list-none flex-col items-start justify-end gap-4">
-              {navLinks.map((nav) => (
-                <li
-                  key={nav.id}
-                  className={`font-poppins cursor-pointer text-[16px] font-medium ${
-                    active === nav.id ? "text-white" : "text-secondary"
-                  }`}
-                  onClick={() => {
-                    setToggle(!toggle);
-                  }}
-                >
-                  <a href={`#${nav.id}`}>{nav.title}</a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </div>
-    </nav>
+            <span className="text-sm">{navItem.name}</span>
+          </span>
+        ))}
+      </motion.div>
+    </AnimatePresence>
   );
 };
 

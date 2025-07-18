@@ -1,18 +1,9 @@
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter } from 'react-router-dom';
 
-import {
-  About,
-  Contact,
-  Experience,
-  Feedbacks,
-  Hero,
-  Navbar,
-  Tech,
-  Works,
-  StarsCanvas,
-} from "./components";
-import { useEffect } from "react";
-import { config } from "./constants/config";
+import { Contact, Experience, Hero, Navbar, Works, StarsCanvas } from './components';
+import { useEffect } from 'react';
+import { config } from './constants/config';
+import Approach from './components/Approach';
 
 const App = () => {
   useEffect(() => {
@@ -23,16 +14,17 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <div className="bg-primary relative z-0">
+      <div className="bg-primary relative z-0 overflow-hidden">
         <div className="bg-hero-pattern bg-cover bg-center bg-no-repeat">
           <Navbar />
           <Hero />
         </div>
-        <About />
+        {/* <Grid /> */}
         <Experience />
-        <Tech />
+        {/* <Tech /> */}
         <Works />
-        <Feedbacks />
+        <Approach />
+        {/* <Feedbacks /> */}
         <div className="relative z-0">
           <Contact />
           <StarsCanvas />
