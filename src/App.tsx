@@ -19,7 +19,6 @@ const App = () => {
           <Navbar />
           <Hero />
         </div>
-        {/* <Grid /> */}
         <Experience />
         {/* <Tech /> */}
         <Works />
