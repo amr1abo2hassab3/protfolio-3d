@@ -4,7 +4,7 @@ import { CanvasRevealEffect } from './CanvasRevealEffect';
 
 const Approach = () => {
   return (
-    <section id='' className="w-full py-20 container mx-auto">
+    <section id="approach" className="w-full py-20 container mx-auto">
       <h1 className="heading text-center text-[48px] font-bold">
         My <span className="text-[#CBACF9]">approach</span>
       </h1>

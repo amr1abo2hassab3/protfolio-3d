@@ -1,4 +1,4 @@
-import  { useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import clsx from 'clsx';
 
@@ -11,6 +11,8 @@ const navLinks: NavItem[] = [
   { name: 'About', link: '/' },
   { name: 'Experience', link: '#experience' },
   { name: 'Prjects', link: '#prjects' },
+  { name: 'Services', link: '#services' },
+  // { name: 'Approach', link: '#approach' },
   { name: 'Contact', link: '#contact' },
 ];
 
