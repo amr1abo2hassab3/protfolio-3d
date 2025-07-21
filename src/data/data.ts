@@ -216,5 +216,9 @@ export const socialMedia = [
   },
 ];
 
-
+export const words = [
+  { text: "Concepts", imgPath: "/images/concepts.svg" },
+  { text: "Designs", imgPath: "/images/designs.svg" },
+  { text: "Code", imgPath: "/images/code.svg" },
+];
 
