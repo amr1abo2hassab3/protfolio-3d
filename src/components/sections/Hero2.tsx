@@ -1,7 +1,8 @@
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import { words } from '../../data/data';
-import ButtonHero from '../ButtonHero';
+import { words } from '../../data/data.js';
+import ButtonHero from '../ButtonHero.js';
+// @ts-ignore
 import HeroExperience from '../models/hero_models/HeroExperience.jsx';
 
 const Hero = () => {
