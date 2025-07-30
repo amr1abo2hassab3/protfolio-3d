@@ -15,7 +15,7 @@ const Hero = () => {
           <div className="violet-gradient h-40 w-1 sm:h-80" />
         </div>
 
-        <div>
+        <div className='mt-8'>
           <HeroTextAnimation />
         </div>
       </div>
