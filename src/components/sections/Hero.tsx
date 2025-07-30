@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 
 import { styles } from '../../constants/styles';
-import { config } from '../../constants/config';
 import ComputersCanvas from '../canvas/ComputersCanvas';
+import HeroTextAnimation from '../HeroTextAnimation';
 
 const Hero = () => {
   return (
@@ -16,13 +16,7 @@ const Hero = () => {
         </div>
 
         <div>
-          <h1 className={`${styles.heroHeadText} text-white`}>
-            Hi, I'm <span className="text-[#915EFF]">{config.hero.name}</span>
-          </h1>
-          <p className={`${styles.heroSubText} text-white-100 mt-2`}>
-            {config.hero.p[0]} <br className="hidden sm:block" />
-            {config.hero.p[1]}
-          </p>
+          <HeroTextAnimation />
         </div>
       </div>
       <div>

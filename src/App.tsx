@@ -6,7 +6,7 @@ import Approach from './components/Approach';
 import Footer from './components/ui/Footer';
 import { config } from './constants/config';
 import Services from './components/sections/Services';
-import Hero from './components/sections/Hero2';
+import Hero from './components/sections/Hero';
 
 const App = () => {
   useEffect(() => {
@@ -21,7 +21,6 @@ const App = () => {
         {/* Hero Section */}
         <div className="bg-hero-pattern bg-cover bg-center bg-no-repeat">
           <Navbar />
-          {/* <Hero /> */}
           <Hero />
         </div>
         {/* Main Sections */}
